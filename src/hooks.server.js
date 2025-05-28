@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { sequence } from '@sveltejs/kit/hooks';
+import { MONGODB_URI } from '$env/static/private';
 
-const MONGODB_URI = 'mongodb+srv://akshaysawant917:m3mD4EncX4EdI7eR@cluster0.9aprz.mongodb.net/marketplace';
+// const MONGODB_URI = 'mongodb+srv://akshaysawant917:m3mD4EncX4EdI7eR@cluster0.9aprz.mongodb.net/marketplace';
 
 let isConnected = false;
 
