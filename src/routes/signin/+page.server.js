@@ -1,34 +1,38 @@
-import { error, redirect } from '@sveltejs/kit';
-import PocketBase from 'pocketbase';
-import { POCKETBASE_URL } from '$env/static/private';
-
-const pb = new PocketBase(POCKETBASE_URL);
+import { fail, redirect } from '@sveltejs/kit';
+import User from '$lib/server/models/user.js';
 
 export const actions = {
     login: async ({ request, cookies }) => {
         try {
-            const formData = await request.formData();
-            const email = formData.get('email');
-            const password = formData.get('password');
+            const formData = Object.fromEntries(await request.formData());
+            const { email, password } = formData;
 
-            // Authenticate user in PocketBase
-            const authData = await pb.collection('users').authWithPassword(email, password);
-            
-            console.log("User Logged In:", authData);
+            if (!email || !password) {
+                return fail(400, { message: 'All fields are required' });
+            }
 
-            // Store the authentication token in cookies
-            cookies.set('pb_auth', authData.token, {
+            // 🔹 Find User in Database
+            const user = await User.findOne({ email, password }); // Just match email & password
+
+            if (!user) {
+                return fail(400, { message: 'Invalid credentials' });
+            }
+
+            // 🔹 Store user info in a cookie (Not Secure, but as per your request)
+            cookies.set('user_session', JSON.stringify({ email: user.email, role: user.role }), {
                 path: '/',
-                httpOnly: true,  // Prevents client-side access
-                secure: true,    // Use only on HTTPS
-                sameSite: 'strict',
-                maxAge: 60 * 60 * 24 * 7 // 1 week expiration
+                httpOnly: false, // Can be accessed by JavaScript
+                secure: false, // Change to true in production
+                sameSite: 'lax',
+                maxAge: 60 * 60 * 24 * 7 // 7 days
             });
 
-            return { success: true, user: authData.record };
-        } catch (err) {
-            console.error("Login Error:", err);
-            return error(400, { message: 'Invalid email or password' });
+            console.log('✅ Login Successful:', user);
+            throw redirect(302, '/dashboard'); // Redirect after login
+
+        } catch (error) {
+            console.error('❌ Login Error:', error);
+            return fail(500, { message: 'Internal Server Error' });
         }
     }
 };

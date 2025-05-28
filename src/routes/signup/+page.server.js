@@ -1,40 +1,55 @@
-import { error } from '@sveltejs/kit';
-import PocketBase from 'pocketbase';
-import {POCKETBASE_URL} from '$env/static/private'
-
-const pb = new PocketBase(POCKETBASE_URL);
+import { fail } from '@sveltejs/kit';
+import mongoose from 'mongoose';
+import User from '$lib/server/models/user.js';
 
 export const actions = {
-    signup: async ({ request }) => {
-        try {
-            const formData = await request.formData();
-            const email = formData.get('email');
-            const password = formData.get('password');
-            const name = formData.get('name');
-            const role = formData.get('role');
+  signup: async ({ request }) => {
+    try {
+      console.log('📌 Received signup request');
 
-            console.log("Form Data:", { email, password, name, role });
+      // Use formData() instead of json() if the form is sent as x-www-form-urlencoded
+      const formData = await request.formData();
+      console.log('📌 Raw formData:', formData);
 
-            // ✅ Ensure all fields are not empty
-            if (!email || !password || !name || !role) {
-                throw new Error("All fields are required!");
-            }
+      // Extract form fields
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const password = formData.get('password');
+      const role = formData.get('role');
 
-            // ✅ Create user in PocketBase
-            const user = await pb.collection('users').create({
-                email,
-                password,
-                passwordConfirm: password, // Required by PocketBase
-                name,
-                role
-            });
+      console.log('📌 Parsed form fields:', { name, email, password, role });
 
-            console.log("User Created:", user);
+      if (!name || !email || !password || !role) {
+        console.log('⚠️ Validation failed: Missing fields');
+        return fail(400, { message: 'All fields are required' });
+      }
+      // Check if a user already exists
+      const existingUser = await User.findOne({ email });
+      console.log('📌 Existing user:', existingUser);
 
-            return { success: true, user };
-        } catch (err) {
-            console.error("Signup Error:", err);
-            return error(400, { message: err.message });
-        }
+      if (existingUser) {
+        console.log('⚠️ User already exists with email:', email);
+        return fail(400, { message: 'User with this email already exists' });
+      }
+
+      // Create new user
+      const newUser = new User({
+        username: name,
+        email,
+        password, // Hash this in production
+        role
+      });
+
+      console.log('📌 User before saving:', newUser);
+
+      // Save user to database
+      await newUser.save();
+      console.log('✅ User saved successfully:', newUser);
+
+      return { success: true, message: 'User registered successfully' };
+    } catch (error) {
+      console.error('❌ Signup error:', error);
+      return fail(500, { message: 'Internal Server Error' });
     }
+  }
 };

@@ -1,15 +1,18 @@
 <script>
     import { enhance } from '$app/forms';
+    import { page } from '$app/stores';
 
     let message = '';
 
-    // async function handleSubmit({ result }) {
+    // Enhance form for progressive enhancement
+    let form;
+    // enhance(form, ({ result }) => {
     //     if (result.type === 'success') {
-    //         message = '✅ Signup successful! You can now log in.';
-    //     } else {
-    //         message = result.data?.message || '❌ Signup failed. Try again.';
+    //         message = result.data.message;
+    //     } else if (result.type === 'failure') {
+    //         message = result.data.error;
     //     }
-    // }
+    // });
 </script>
 
 <div class="flex justify-center items-center min-h-screen bg-cover bg-center" 
@@ -19,7 +22,7 @@
         <h2 class="text-3xl font-bold text-blue-800 text-center mb-6">Join ExploreTravelia</h2>
         <p class="text-gray-600 text-center mb-4">Connect with travelers & brands worldwide! ✈️🌍</p>
 
-        <form method="POST" action="?/signup"  class="space-y-4">
+        <form method="POST" action="?/signup" use:enhance bind:this={form} class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700">Name</label>
                 <input type="text" name="name" placeholder="Your Name" required 
@@ -52,6 +55,8 @@
             </button>
         </form>
 
-        <p class="text-center text-sm mt-4 text-gray-700 font-medium">{message}</p>
+        {#if message}
+            <p class="text-center text-sm mt-4 text-gray-700 font-medium">{message}</p>
+        {/if}
     </div>
 </div>
