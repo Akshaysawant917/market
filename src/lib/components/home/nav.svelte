@@ -39,7 +39,7 @@
         >
         <a
         class="hover:text-blue-600 transition-colors duration-200 cursor-pointer"
-        on:click={() => navigateTo('/feed')}>Feed</a
+        on:click={() => navigateTo('/campaigns')}>Campaigns</a
       >
       <a
         class="hover:text-blue-600 transition-colors duration-200 cursor-pointer"
