@@ -8,6 +8,6 @@
 	$user = data.user; 
 </script>
 <Navbar />	
-<slot></slot>
-<!-- {@render children()} -->
+<!-- <slot></slot> -->
+{@render children()}
 <Footer />	
