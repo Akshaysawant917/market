@@ -1,5 +1,5 @@
 <script>
-    import AllCamps from "$lib/components/camps/AllCamps.svelte"
+    import AllCamps from "$lib/components/Camps/AllCamps.svelte"
 </script>
 
 <AllCamps/>
