@@ -1,5 +1,5 @@
 <script>
-    import CreateCamp from "$lib/components/camps/CreateCamp.svelte"
+    import CreateCamp from "$lib/components/Camps/CreateCamp.svelte"
 </script>
 
 <CreateCamp/>
