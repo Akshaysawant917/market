@@ -37,6 +37,11 @@
           on:click={() => navigateTo('/contact')}
           >Contact</a
         >
+           <a
+          class="hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+          on:click={() => navigateTo('/pricing')}
+          >Pricing</a
+        >
         <a
         class="hover:text-blue-600 transition-colors duration-200 cursor-pointer"
         on:click={() => navigateTo('/campaigns')}>Campaigns</a
@@ -94,6 +99,7 @@
           <a class="cursor-pointer hover:text-blue-600" on:click={() => navigateTo('/about-us')}>About</a>
           <a class="cursor-pointer hover:text-blue-600" on:click={() => navigateTo('/contact')}>Contact</a>
           <a class="cursor-pointer hover:text-blue-600" on:click={() => navigateTo('/feed')}>Feed</a>
+            <a class="cursor-pointer hover:text-blue-600" on:click={() => navigateTo('/pricing')}>Pricing</a>
           <a class="cursor-pointer hover:text-blue-600" on:click={() => navigateTo('/post-campaign')}>Create Camp</a>
   
           <div class="flex flex-col space-y-3 mt-4">

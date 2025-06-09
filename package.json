@@ -24,13 +24,14 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
+		"@lucia-auth/adapter-mongoose": "^3.0.1",
 		"@sveltejs/adapter-node": "^5.2.2",
 		"bcrypt": "^5.1.1",
 		"bcryptjs": "^2.4.3",
 		"jsonwebtoken": "^9.0.2",
+		"lucia": "2.7.7",
 		"mongodb": "^6.14.2",
 		"mongoose": "^8.9.3",
-		"pocketbase": "^0.25.2",
-		"lucia": "2.7.7"
+		"pocketbase": "^0.25.2"
 	}
 }

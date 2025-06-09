@@ -2,6 +2,7 @@ import { lucia } from 'lucia';
 import { mongoose as mongooseAdapter } from '@lucia-auth/adapter-mongoose';
 import User from '$lib/server/models/User.js';
 import Session from '$lib/server/models/Session.js';
+import Profile from '$lib/server/models/Profile.js';
 import Key from '$lib/server/models/Key.js';
 import { LUCIA_SECRET } from '$env/static/private';
 
@@ -14,8 +15,8 @@ export const authErrorMessages = {
 
 // ✅ Initialize Lucia authentication
 export const auth = lucia({
-    adapter: mongooseAdapter({ User, Key, Session }),
-    env: 'DEV', // Change to 'PROD' for production
+    adapter: mongooseAdapter({ User, Key, Session, Profile }),
+    env: 'PROD', // Change to 'PROD' for production
     secret: LUCIA_SECRET,
     cookies: {
         secure: false // Set `true` for HTTPS
@@ -23,9 +24,13 @@ export const auth = lucia({
     transformUser: (user) => ({
         id: user._id.toString(), // ✅ Corrected to use MongoDB `_id`
         email: user.email
-    })
+    }),
+
+    getUserAttributes: (databaseUser) => {
+        return {
+            username: databaseUser.username,
+            email: databaseUser.email
+        }
+    }
 });
-
-// ❌ Remove `await auth.createUser()` from here — should be inside an async function!
-
 export default auth;
