@@ -1,4 +1,4 @@
-<section class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-20 px-6 mt-4 text-center rounded-3xl max-w-7xl mx-auto shadow-lg">
+<section class="bg-gradient-to-r  from-purple-600 to-pink-600 text-white py-20 px-3 mt-4 text-center rounded-3xl max-w-7xl mx-20 shadow-lg">
     <h2 class="text-4xl font-extrabold mb-4 drop-shadow-md">Ready to Get Started?</h2>
     <p class="mb-8 text-lg drop-shadow-sm">Join thousands of brands and influencers already collaborating</p>
     <a href="/register" 

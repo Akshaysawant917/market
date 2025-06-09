@@ -22,7 +22,7 @@
     }
   </script>
   
-  <section class="max-w-7xl mx-auto p-8 bg-white  my-12">
+  <section class="max-w-4xl mx-auto p-8 bg-white  my-12 mt-20">
     <h1 class="text-3xl font-bold mb-8 text-center">Create New Campaign</h1>
   
     <form

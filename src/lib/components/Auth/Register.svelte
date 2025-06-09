@@ -15,7 +15,7 @@
     // });
 </script>
 
-<div class="flex justify-center items-center min-h-screen bg-cover bg-center" 
+<div class="flex justify-center items-center min-h-screen mt-20 pb-10 bg-cover bg-center" 
     style="background-image: url('/travel-bg.jpg');">
     
     <div class="bg-white bg-opacity-90 p-8 rounded-xl shadow-lg w-full mt-10 max-w-md">
