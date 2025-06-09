@@ -1,5 +1,5 @@
 <script>
-    import SingleCamp from "$lib/components/camps/SingleCamp.svelte"
+    import SingleCamp from "$lib/components/Camps/SingleCamp.svelte"
 </script>
 
 
